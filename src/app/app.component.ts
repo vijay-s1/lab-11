@@ -20,6 +20,7 @@ export class AppComponent {
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
+  public chartColors: Array<any> = [{backgroundColor: []}]
 
   public pollQuestion: string;
   public voteValueSelected: number = -1;
@@ -49,16 +50,18 @@ export class AppComponent {
       this.pieChartLabels = []
       this.pieChartData = []
       for (let i = 0; i < poll.options.length; i++) {
-        this.pieChartLabels.push(poll.options[i]['text'])
-        this.pieChartData.push(poll.options[i]['count'])
+        this.pieChartLabels.push(poll.options[i].text)
+        this.pieChartData.push(poll.options[i].count)
+        this.chartColors[0].backgroundColor.push(poll.options[i].colour)
       }
     });
   }
-  
 
   sendVote() {
     this.socket.emit("newVote", this.voteValueSelected);
   }
+
+  
 
 
   
